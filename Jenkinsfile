@@ -5,7 +5,21 @@ library identifier: 'RHTAP_Jenkins@main', retriever: modernSCM(
    remote: 'https://github.com/redhat-appstudio/tssc-sample-jenkins.git'])
 
 pipeline {
-    agent any
+    agent {
+      kubernetes {
+        label 'jenkins-agent'
+        cloud 'openshift'
+        serviceAccount 'jenkins'
+        podRetention onFailure()
+        idleMinutes '5'
+        containerTemplate {
+         name 'jnlp'
+         image 'image-registry.openshift-image-registry.svc:5000/jenkins/jenkins-agent-base:latest'
+         ttyEnabled true
+         args '${computer.jnlpmac} ${computer.name}'
+        }
+       }
+}
     environment {
         /* Not used but init.sh will fail if they're missing */
         COSIGN_SECRET_PASSWORD = 'dummy'
