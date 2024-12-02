@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: vfpdzcn2e-go-gitops
+  description: This is GitOps manifest for vfpdzcn2e-go   
+  links:
+    - url: https://www.redhat.com/en/solutions/trusted-software-supply-chain
+      title: Trusted Secure Supply Chain 
+      icon: dashboard
+      type: admin-dashboard
+  annotations:    
+    argocd/app-name: vfpdzcn2e-go
+    backstage.io/kubernetes-id: vfpdzcn2e-go 
+    backstage.io/techdocs-ref: dir:. 
+    jenkins.io/job-full-name: vfpdzcn2e-go-gitops   
+spec:
+  type: gitops
+  owner: user:guest 
+  lifecycle: experimental
+  dependsOn:
+    - component:vfpdzcn2e-go
